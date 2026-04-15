@@ -1,0 +1,46 @@
+import flet as ft
+
+def main(page: ft.Page):
+    page.title = "Build a pizza"
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+
+    base = ft.Image(src="basedepizza.png", width=500, height=500)
+    pepperoni = ft.Image(src="pepperonis.png", width=400, height=400, visible=False)
+    hongos = ft.Image(src="hongos.png", width=400, height=400, visible=False)
+    aceitunas = ft.Image(src="aceitunas.png", width=400, height=400, visible=False)
+
+    def toggle_topping(e):
+        pepperoni.visible = pepperoni_switch.value
+        hongos.visible = hongos_switch.value
+        aceitunas.visible = aceitunas_switch.value
+        page.update()
+
+    pepperoni_switch = ft.Switch(label="Pepperoni", on_change=toggle_topping)
+    hongos_switch = ft.Switch(label="hongos", on_change=toggle_topping)
+    aceitunas_switch = ft.Switch(label="aceitunas", on_change=toggle_topping)
+
+    pizza_stack = ft.Stack(
+        controls=[base, pepperoni, hongos, aceitunas],
+        width=500,
+        height=500
+    )
+
+    page.add(
+        ft.Row(
+            [
+                pizza_stack,
+                ft.Column(
+                    [
+                        pepperoni_switch,
+                        hongos_switch,
+                        aceitunas_switch
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER
+                )
+            ],
+            alignment=ft.MainAxisAlignment.CENTER
+        )
+    )
+
+# Run app
+ft.app(target=main)
